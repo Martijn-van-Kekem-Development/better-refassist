@@ -3,6 +3,12 @@ import {Helpers} from "../Helpers.js";
 
 export class PastMatchWidget {
     /**
+     * The local storage tag for the widget data.
+     * @private
+     */
+    private static readonly LS_DATA_TAG = "betterra_w1_data";
+
+    /**
      * The retrieved assignments.
      * @protected
      */
@@ -77,12 +83,16 @@ export class PastMatchWidget {
 
     /**
      * Open the detail view
+     * @param rootElement The root element for this match.
      * @param matchID The match ID.
      */
-    static openDetailView(matchID: string) {
+    static openDetailView(rootElement: HTMLElement, matchID: string) {
         const forms = this.forms.get(matchID);
         const modalContainer = document.getElementById("betterra-form-modal");
         const itemsContainer = document.getElementById("betterra-form-modal-items");
+
+        this.saveFormCount(matchID, forms.length);
+        rootElement.classList.remove("has-new-forms");
 
         itemsContainer.innerHTML = "";
         for (let form of forms) {
@@ -108,6 +118,29 @@ export class PastMatchWidget {
     }
 
     /**
+     * Check if there are new forms available for this assignment
+     * @param assignment The assignment to check the new forms for.
+     * @param formCount The amount of forms currently available.
+     */
+    static checkNewForms(assignment: Assignment, formCount: number): boolean {
+        const data = JSON.parse(localStorage.getItem(this.LS_DATA_TAG) ?? "{}");
+        const previousAvailable = data[assignment.MatchId] ?? 0;
+
+        return previousAvailable < formCount;
+    }
+
+    /**
+     * Save the available amount of forms.
+     * @param matchID The match ID.
+     * @param formCount The form count to save.
+     */
+    static saveFormCount(matchID: string, formCount: number) {
+        const data = JSON.parse(localStorage.getItem(this.LS_DATA_TAG) ?? "{}");
+        data[matchID] = formCount;
+        localStorage.setItem(this.LS_DATA_TAG, JSON.stringify(data));
+    }
+
+    /**
      * Get a match row element.
      */
     static getMatchRowElement(assignment: Assignment): HTMLElement {
@@ -116,6 +149,10 @@ export class PastMatchWidget {
 
         const date = Helpers.parseDate(assignment.StartDate);
         const formCount = this.forms.get(String(assignment.MatchId)).length;
+
+        if (this.checkNewForms(assignment, formCount)) {
+            element.classList.add("has-new-forms");
+        }
 
         element.innerHTML = `
             <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
@@ -129,7 +166,8 @@ export class PastMatchWidget {
             </div>
         `;
 
-        element.addEventListener("click", () => this.openDetailView(String(assignment.MatchId)));
+        element.addEventListener("click",
+            () => this.openDetailView(element, String(assignment.MatchId)));
         return element;
     }
 

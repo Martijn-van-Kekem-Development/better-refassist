@@ -12,6 +12,28 @@
     }
 }
 
+/**
+Card widget for Available Forms.
+ */
+.card[data-custom-card="1"] {
+    .card-body .has-new-forms a.text-hover-primary {
+        position: relative;
+
+        &::after {
+            content: "NIEUW";
+            position: absolute;
+            right: -4.5rem;
+            font-size: 0.8em;
+            background: #3699ff;
+            padding: 0.1rem 0.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #fafafa;
+            border-radius: 0.2rem;
+        }
+    }
+}
+
 body[data-season-saved="false"] .card[data-custom-card] {
     .card-body.not-saved-error {
         display: block;
