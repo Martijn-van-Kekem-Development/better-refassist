@@ -1,0 +1,26 @@
+{
+  "name": "better-refassist",
+  "version": "1.0.0",
+  "description": "Plugin that provides various improvements for the application RefAssist.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:css": "./node_modules/sass/sass.js ./src/css:./build/css --style compressed --no-source-map",
+    "build:js": "./node_modules/typescript/bin/tsc -p ./src/js/tsconfig.json",
+    "build": "npm run build:css && npm run build:js",
+
+    "dev:css": "npm run build:css -- --watch",
+    "dev:js": "npm run build:js -- -w",
+    "dev": "concurrently --kill-others \"npm run dev:css\" \"npm run dev:js\""
+  },
+  "author": {
+    "email": "info@vankekem.com",
+    "name": "Martijn van Kekem Development"
+  },
+  "license": "ISC",
+  "devDependencies": {
+    "@types/chrome": "^0.0.270",
+    "concurrently": "^8.2.2",
+    "sass": "^1.78.0",
+    "typescript": "^5.5.4"
+  }
+}

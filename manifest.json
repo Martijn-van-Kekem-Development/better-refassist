@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "BetterRefAssist",
+  "description": "Plugin that provides various improvements for the application RefAssist.",
+  "version": "1.0",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "32": "assets/umpire.png"
+    }
+  },
+  "icons": {
+    "256": "assets/umpire.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://home.refassist.com/*"
+      ],
+      "js": [
+        "build/js/Injector.js"
+      ],
+      "css": [
+        "build/css/ra_home.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "build/js/*"
+      ],
+      "matches": [
+        "https://home.refassist.com/*"
+      ]
+    }
+  ]
+}

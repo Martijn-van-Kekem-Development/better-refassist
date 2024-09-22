@@ -1,0 +1,23 @@
+.card[data-custom-card] {
+    .card-body.not-saved-error {
+        display: none;
+    }
+
+    .card-body:not(.not-saved-error) {
+        display: block;
+    }
+
+    .card-body > div:last-child {
+        padding-bottom: 1rem;
+    }
+}
+
+body[data-season-saved="false"] .card[data-custom-card] {
+    .card-body.not-saved-error {
+        display: block;
+    }
+
+    .card-body:not(.not-saved-error) {
+        display: none;
+    }
+}
