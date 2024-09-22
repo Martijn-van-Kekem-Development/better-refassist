@@ -1,4 +1,32 @@
 .card[data-custom-card] {
+    .card-header .better-ra-icon {
+        position: relative;
+        width: 1.5rem;
+        aspect-ratio: 1;
+        background-image: url("chrome-extension://__MSG_@@extension_id__/assets/umpire.png");
+        background-size: contain;
+        cursor: pointer;
+
+        &:hover::after {
+            display: block;
+        }
+
+        &::after {
+            content: "BetterRA widget";
+            position: absolute;
+            top: 2rem;
+            display: none;
+            right: 0;
+            width: 9rem;
+            padding: 0.5rem 0;
+            text-align: center;
+            color: #fff;
+            z-index: 999;
+            background: #393939;
+            border-radius: 0.3rem;
+        }
+    }
+
     .card-body.not-saved-error {
         display: none;
     }
@@ -7,8 +35,8 @@
         display: block;
     }
 
-    .card-body > div:last-child {
-        padding-bottom: 1rem;
+    .card-body .scroll-y {
+        padding-bottom: 1.5rem;
     }
 }
 

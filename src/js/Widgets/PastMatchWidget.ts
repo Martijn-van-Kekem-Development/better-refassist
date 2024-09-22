@@ -186,6 +186,7 @@ export class PastMatchWidget {
                         </h3>
                     </div>
                     <div class="card-toolbar me-2">
+                        <div class="better-ra-icon"></div>
                     </div>
                 </div>
                 <div class="card-body card-body-small h-xl-200px not-saved-error">
