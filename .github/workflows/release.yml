@@ -16,7 +16,7 @@ jobs:
           node-version: 20
       - run: npm install
       - run: npm run release
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: release
           path: dist/better-refassist.zip
