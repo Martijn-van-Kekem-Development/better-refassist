@@ -8,6 +8,8 @@
     "build:js": "./node_modules/typescript/bin/tsc -p ./src/js/tsconfig.json",
     "build": "npm run build:css && npm run build:js",
 
+    "release": "bash ./release.sh",
+
     "dev:css": "npm run build:css -- --watch",
     "dev:js": "npm run build:js -- -w",
     "dev": "concurrently --kill-others \"npm run dev:css\" \"npm run dev:js\""

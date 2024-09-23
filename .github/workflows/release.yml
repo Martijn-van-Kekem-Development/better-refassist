@@ -1,0 +1,22 @@
+name: Create new release
+
+on: workflow_dispatch
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: npm install
+      - run: npm run release
+      - uses: actions/upload-artifact@v2
+        with:
+          name: release
+          path: dist/better-refassist.zip
