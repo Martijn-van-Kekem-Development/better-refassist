@@ -18,7 +18,7 @@ export class API {
      */
     public static async getAssignments(pastMatches: boolean): Promise<Assignment[]> {
         const seasonData = this.getSeasonData();
-        if (!seasonData) return;
+        if (!seasonData) return [];
 
         const past = pastMatches ? "true" : "false";
         const data = await fetch("https://home.refassist.com/RefereeApp/GetAssignments", {
