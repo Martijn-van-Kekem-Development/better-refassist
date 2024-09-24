@@ -172,7 +172,7 @@ export class PastMatchWidget extends Widget {
     getWidgetContentHTML(): string {
         return `
             <div class="card-body card-body-small h-xl-200px not-saved-error">
-                Bezoek eerst de 'Aanwijzingen scheids' pagina om deze plugin te activeren.
+                Bezoek eerst de 'Aanwijzingen scheids' pagina om deze widget te activeren.
             </div>
             <div class="card-body card-body-small h-xl-200px">
                 <div class="scroll-y h-xl-185px" style="padding-right: 5px;">
