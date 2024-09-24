@@ -24,21 +24,16 @@ export class PastMatchWidget extends Widget {
     /**
      * When this widget is loaded.
      */
-    public async load() {
+    public async prepare() {
         await this.getData();
 
-        const element = this.getRootElement();
-        const assignmentContainer = element.querySelector(".card-body .scroll-y");
+        const assignmentContainer = this.rootElement.querySelector(".card-body .scroll-y");
         for (let i = 0; i < Math.min(this.assignments.length, 5); i++) {
             const assignment = this.assignments[i];
 
             if (i > 0) assignmentContainer.append(this.getSeparatorElement());
             assignmentContainer.append(this.getMatchRowElement(assignment));
         }
-
-        // Insert widget into dashboard
-        const container = document.getElementById("dashboard");
-        container.insertBefore(element, container.firstChild);
 
         // Insert detail view into body
         document.body.append(this.getDetailViewRootElement());
@@ -70,7 +65,6 @@ export class PastMatchWidget extends Widget {
         }
 
         await Promise.all(promises);
-        console.log(Array.from(this.forms.entries()));
     }
 
     /**
@@ -173,35 +167,19 @@ export class PastMatchWidget extends Widget {
     }
 
     /**
-     * Get the HTML to inject for this widget.
+     * @override
      */
-    getRootElement(): HTMLElement {
-        const element = document.createElement("div");
-        element.setAttribute("data-betterra-widget-container", `${this.getID()}`);
-        element.classList.add("col-xl-4", "widget");
-        element.innerHTML = `
-            <div class="card card-flush mb-5" data-custom-card="${this.getID()}">
-                <div class="card-header card-header-small border-bottom">
-                    <div class="card-title">
-                        <h3 class="card-label">
-                            <span class="card-label fw-bolder fs-4">Beschikbare formulieren</span>
-                        </h3>
-                    </div>
-                    <div class="card-toolbar me-2">
-                        <div class="better-ra-icon"></div>
-                    </div>
-                </div>
-                <div class="card-body card-body-small h-xl-200px not-saved-error">
-                    Bezoek eerst de 'Aanwijzingen scheids' pagina om deze plugin te activeren.
-                </div>
-                <div class="card-body card-body-small h-xl-200px">
-                    <div class="scroll-y h-xl-185px" style="padding-right: 5px;">
-                         
-                    </div>
+    getWidgetContentHTML(): string {
+        return `
+            <div class="card-body card-body-small h-xl-200px not-saved-error">
+                Bezoek eerst de 'Aanwijzingen scheids' pagina om deze plugin te activeren.
+            </div>
+            <div class="card-body card-body-small h-xl-200px">
+                <div class="scroll-y h-xl-185px" style="padding-right: 5px;">
+                     
                 </div>
             </div>
         `;
-        return element;
     }
 
     /**
@@ -215,7 +193,7 @@ export class PastMatchWidget extends Widget {
                 <div class="modal-dialog modal-dialog-scrollable modal-s">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Beschikbare formulieren</h5>
+                            <h5 class="modal-title">${this.getTitle()}</h5>
                             <div class="btn btn-icon btn-sm btn-light-primary ms-2" data-bs-dismiss="modal" aria-label="Close">
                                 <span class="fa-regular fs-4 fa-times" aria-hidden="true"></span>
                             </div>

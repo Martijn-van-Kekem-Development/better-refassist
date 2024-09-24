@@ -17,12 +17,12 @@
         }
 
         &::after {
-            content: "BetterRefAssist";
+            content: "BetterRefAssist widget";
             position: absolute;
             top: 2rem;
             display: none;
             right: 0;
-            width: 9rem;
+            width: 11.5rem;
             padding: 0.5rem 0;
             text-align: center;
             color: #fff;
@@ -41,7 +41,7 @@
     }
 
     .card-body .scroll-y {
-        padding-bottom: 1.5rem;
+        padding-bottom: 1rem;
     }
 }
 

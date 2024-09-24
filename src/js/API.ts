@@ -36,7 +36,30 @@ export class API {
             "mode": "cors",
             "credentials": "include"
         });
+
         return await data.json();
+    }
+
+    /**
+     * Get the expenses for the user.
+     */
+    public static async getExpenses(): Promise<Expense[]> {
+        const seasonData = this.getSeasonData();
+        if (!seasonData) return [];
+
+        const data = await fetch("https://home.refassist.com/ExpensesForOfficials/ExpensesRead", {
+            "headers": {
+                "accept": "application/json, text/javascript, */*; q=0.01",
+                "cache-control": "no-cache",
+                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "pragma": "no-cache",
+            },
+            "body": `sort=&group=&filter=&seasonId=${seasonData.season}`,
+            "method": "POST",
+            "mode": "cors",
+            "credentials": "include"
+        });
+        return (await data.json()).Data;
     }
 
     /**
@@ -91,6 +114,17 @@ export interface Assignment {
     "CancellationPossible": boolean,
     "HasFilledForms": boolean,
     "TransportDistance": number,
+}
+
+export interface Expense {
+    "Amount": number,
+    "Approvable": boolean,
+    "CostLineType": string,
+    "Date": string,
+    "DatePaid": string,
+    "Explanation": string,
+    Id: number,
+    Status: number
 }
 
 export interface Form {

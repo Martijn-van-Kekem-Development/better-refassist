@@ -1,5 +1,6 @@
 import {Widget} from "./Widget.js";
 import {PastMatchWidget} from "./PastMatchWidget.js";
+import {DeclarationsWidget} from "./DeclarationsWidget.js";
 
 export class WidgetManager {
     /**
@@ -26,7 +27,7 @@ export class WidgetManager {
      * Get the available widgets for a given
      */
     static getAvailableWidgets(): Widget[] {
-        return [new PastMatchWidget()]
+        return [new PastMatchWidget(), new DeclarationsWidget()]
     }
 
     /**
@@ -42,6 +43,9 @@ export class WidgetManager {
         }
     }
 
+    /**
+     * Get the HTML element for the widget manager title.
+     */
     static getTitleHTML() {
         const el = document.createElement("div");
         el.classList.add("betterra-widget-select-title");
@@ -58,18 +62,18 @@ export class WidgetManager {
     static getWidgetEnableRowHTML(widget: Widget) {
         const el = document.createElement("div");
         el.innerHTML = `
-            <div id="container-betterra-widget-${widget.getID()}">
+            <div id="container-widget-bra${widget.getID()}">
                 <div class="form-group d-flex flex-stack">
                     <div class="d-flex flex-column">
-                        <label class="fw-bold text-dark fs-4 cursor-pointer" for="betterra-widget-switch-${widget.getID()}">${widget.getTitle()}</label>
+                        <label class="fw-bold text-dark fs-4 cursor-pointer" for="widget-switch-bra${widget.getID()}">${widget.getTitle()}</label>
                         <div class="fs-7 text-gray-700 pe-10">
                             ${widget.getDescription()}
                         </div>
                     </div>
                     <div class="d-flex justify-content-end">
                         <div class="form-check form-switch form-check-custom form-check-solid">
-                            <input class="form-check-input h-25px w-45px widget-switch" type="checkbox" value="" id="betterra-widget-switch-${widget.getID()}" data-betterra-widgetid="${widget.getID()}">
-                            <label class="form-check-label" for="betterra-widget-switch-${widget.getID()}">
+                            <input class="form-check-input h-25px w-45px widget-switch" type="checkbox" value="" id="widget-switch-bra${widget.getID()}" data-widgetid="bra${widget.getID()}">
+                            <label class="form-check-label" for="widget-switch-bra${widget.getID()}">
                             </label>
                         </div>
                     </div>
@@ -78,9 +82,13 @@ export class WidgetManager {
             </div>
         `;
 
-        const checkbox = el.querySelector<HTMLInputElement>("input[data-betterra-widgetid]");
-        checkbox.addEventListener("change", () => this.updateWidgetEnabled(checkbox, widget));
+        const checkbox = el.querySelector<HTMLInputElement>(`input[data-widgetid="bra${widget.getID()}"]`);
         checkbox.checked = widget.isEnabled();
+        checkbox.addEventListener("click", (e) => {
+            e.stopPropagation();
+            console.log(checkbox);
+            this.updateWidgetEnabled(checkbox, widget).then();
+        });
 
         return el;
     }
@@ -96,8 +104,8 @@ export class WidgetManager {
         if (el.checked) {
             await widget.load();
         } else {
-            for (let el of document.querySelectorAll("[data-betterra-widget-container]"))
-                el.remove();
+            const relatedElements = document.querySelectorAll(`#widget-bra${widget.getID()}`);
+            for (let el of relatedElements) el.remove();
         }
     }
 }
