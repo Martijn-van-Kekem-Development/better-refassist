@@ -1,3 +1,8 @@
+.betterra-widget-select-title {
+    text-align: center;
+    margin-block: 1.5rem;
+}
+
 .card[data-custom-card] {
     .card-header .better-ra-icon {
         position: relative;
@@ -12,7 +17,7 @@
         }
 
         &::after {
-            content: "BetterRA widget";
+            content: "BetterRefAssist";
             position: absolute;
             top: 2rem;
             display: none;

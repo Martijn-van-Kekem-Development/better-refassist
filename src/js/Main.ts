@@ -1,4 +1,5 @@
 import {PastMatchWidget} from "./Widgets/PastMatchWidget.js";
+import {WidgetManager} from "./Widgets/WidgetManager.js";
 
 export class Main {
     /**
@@ -7,7 +8,7 @@ export class Main {
     constructor() {
         const path = window.location.pathname.trim().toLowerCase();
         if (path === '/')
-            PastMatchWidget.load();
+            WidgetManager.load().then();
         else if (path === '/refereeapp') {
             this.saveSeasonData();
         }

@@ -1,29 +1,30 @@
 import {API, Assignment, Form} from "../API.js";
 import {Helpers} from "../Helpers.js";
+import {Widget} from "./Widget.js";
 
-export class PastMatchWidget {
+export class PastMatchWidget extends Widget {
     /**
      * The local storage tag for the widget data.
      * @private
      */
-    private static readonly LS_DATA_TAG = "betterra_w1_data";
+    private readonly LS_DATA_TAG = `betterra_w${this.getID()}_data`;
 
     /**
      * The retrieved assignments.
      * @protected
      */
-    protected static assignments: Assignment[];
+    protected assignments: Assignment[];
 
     /**
      * The forms per assignment.
      * @protected
      */
-    protected static forms: Map<string, Form[]>;
+    protected forms: Map<string, Form[]>;
 
     /**
      * When this widget is loaded.
      */
-    public static async load() {
+    public async load() {
         await this.getData();
 
         const element = this.getRootElement();
@@ -47,7 +48,7 @@ export class PastMatchWidget {
      * Get the data for this widget.
      * @protected
      */
-    protected static async getData() {
+    protected async getData() {
         this.assignments = (await API.getAssignments(true)).slice(0, 5);
         this.forms = new Map();
 
@@ -75,7 +76,7 @@ export class PastMatchWidget {
     /**
      * Get a separator element.
      */
-    static getSeparatorElement(): HTMLElement {
+    getSeparatorElement(): HTMLElement {
         const element = document.createElement("div");
         element.classList.add("separator", "separator-dashed", "my-3");
         return element;
@@ -86,7 +87,7 @@ export class PastMatchWidget {
      * @param rootElement The root element for this match.
      * @param matchID The match ID.
      */
-    static openDetailView(rootElement: HTMLElement, matchID: string) {
+    openDetailView(rootElement: HTMLElement, matchID: string) {
         const forms = this.forms.get(matchID);
         const modalContainer = document.getElementById("betterra-form-modal");
         const itemsContainer = document.getElementById("betterra-form-modal-items");
@@ -109,7 +110,7 @@ export class PastMatchWidget {
     /**
      * Close the detail view.
      */
-    static closeDetailView() {
+    closeDetailView() {
         const modalContainer = document.getElementById("betterra-form-modal");
         document.body.classList.remove("modal-open");
         document.getElementById("betterra-backdrop").style.display = "none";
@@ -122,7 +123,7 @@ export class PastMatchWidget {
      * @param assignment The assignment to check the new forms for.
      * @param formCount The amount of forms currently available.
      */
-    static checkNewForms(assignment: Assignment, formCount: number): boolean {
+    checkNewForms(assignment: Assignment, formCount: number): boolean {
         const data = JSON.parse(localStorage.getItem(this.LS_DATA_TAG) ?? "{}");
         const previousAvailable = data[assignment.MatchId] ?? 0;
 
@@ -134,7 +135,7 @@ export class PastMatchWidget {
      * @param matchID The match ID.
      * @param formCount The form count to save.
      */
-    static saveFormCount(matchID: string, formCount: number) {
+    saveFormCount(matchID: string, formCount: number) {
         const data = JSON.parse(localStorage.getItem(this.LS_DATA_TAG) ?? "{}");
         data[matchID] = formCount;
         localStorage.setItem(this.LS_DATA_TAG, JSON.stringify(data));
@@ -143,7 +144,7 @@ export class PastMatchWidget {
     /**
      * Get a match row element.
      */
-    static getMatchRowElement(assignment: Assignment): HTMLElement {
+    getMatchRowElement(assignment: Assignment): HTMLElement {
         const element = document.createElement("div");
         element.classList.add("d-flex", "flex-stack");
 
@@ -174,11 +175,12 @@ export class PastMatchWidget {
     /**
      * Get the HTML to inject for this widget.
      */
-    static getRootElement(): HTMLElement {
+    getRootElement(): HTMLElement {
         const element = document.createElement("div");
+        element.setAttribute("data-betterra-widget-container", `${this.getID()}`);
         element.classList.add("col-xl-4", "widget");
         element.innerHTML = `
-            <div class="card card-flush mb-5" data-custom-card="1">
+            <div class="card card-flush mb-5" data-custom-card="${this.getID()}">
                 <div class="card-header card-header-small border-bottom">
                     <div class="card-title">
                         <h3 class="card-label">
@@ -205,8 +207,9 @@ export class PastMatchWidget {
     /**
      * Get the detail view element
      */
-    static getDetailViewRootElement(): HTMLElement {
+    getDetailViewRootElement(): HTMLElement {
         const element = document.createElement("div");
+        element.setAttribute("data-betterra-widget-container", `${this.getID()}`);
         element.innerHTML = `
             <div class="modal fade" id="betterra-form-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-modal="true" role="dialog">
                 <div class="modal-dialog modal-dialog-scrollable modal-s">
@@ -242,7 +245,7 @@ export class PastMatchWidget {
      * Get the form link element.
      * @param form The form.
      */
-    static getFormLinkElement(form: Form): HTMLElement {
+    getFormLinkElement(form: Form): HTMLElement {
         const element = document.createElement("div");
         element.classList.add("mb-5", "d-flex");
         element.innerHTML = `
@@ -257,5 +260,26 @@ export class PastMatchWidget {
         });
 
         return element;
+    }
+
+    /**
+     * @override
+     */
+    public getID(): number {
+        return 1;
+    }
+
+    /**
+     * @override
+     */
+    public getTitle(): string {
+        return "Beschikbare formulieren";
+    }
+
+    /**
+     * @override
+     */
+    public getDescription(): string {
+        return "Toont het aantal beschikbare feedbackformulieren voor de laatste 5 aanwijzingen.";
     }
 }
