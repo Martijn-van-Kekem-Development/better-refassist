@@ -19,4 +19,4 @@ jobs:
       - uses: actions/upload-artifact@v4
         with:
           name: better-refassist
-          path: dist
+          path: dist/*
