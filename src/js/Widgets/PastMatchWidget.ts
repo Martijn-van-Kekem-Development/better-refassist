@@ -175,7 +175,7 @@ export class PastMatchWidget extends Widget {
                 Bezoek eerst de 'Aanwijzingen scheids' pagina om deze widget te activeren.
             </div>
             <div class="card-body card-body-small h-xl-200px">
-                <div class="scroll-y h-xl-175px" style="padding-right: 5px;">
+                <div class="scroll-y h-xl-173px" style="padding-right: 5px;">
                      
                 </div>
             </div>

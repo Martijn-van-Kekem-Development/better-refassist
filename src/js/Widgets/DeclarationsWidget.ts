@@ -49,11 +49,11 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Goedgekeurd</a>
-                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan goedgekeurde declaraties.</span>
+                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Voorgesteld</a>
+                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan voorgestelde declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-accepted">&euro; 0,00</span>
+                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-proposed">&euro; 0,00</span>
                             </div>
                         </div>
                     </div>
@@ -61,11 +61,11 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Voorgesteld</a>
-                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan voorgestelde declaraties.</span>
+                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Goedgekeurd</a>
+                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan goedgekeurde declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-proposed">&euro; 0,00</span>
+                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-accepted">&euro; 0,00</span>
                             </div>
                         </div>
                     </div>
