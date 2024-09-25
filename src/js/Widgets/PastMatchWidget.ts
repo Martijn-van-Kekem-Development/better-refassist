@@ -153,7 +153,7 @@ export class PastMatchWidget extends Widget {
             <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                 <div class="me-5 w-75">
                     <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">${assignment.HomeTeam} - ${assignment.AwayTeam}</a>
-                    <span class="text-gray-700 fw-semibold fs-7 d-block text-start ps-0">${assignment.Division} | ${date}</span>
+                    <span class="text-gray-700 fs-7 d-block text-start ps-0">${assignment.Division} | ${date}</span>
                 </div>
                 <div class="d-flex align-items-center">
                     <span class="text-gray-800 fw-bold fs-6 me-3">${formCount}</span>
@@ -175,7 +175,7 @@ export class PastMatchWidget extends Widget {
                 Bezoek eerst de 'Aanwijzingen scheids' pagina om deze widget te activeren.
             </div>
             <div class="card-body card-body-small h-xl-200px">
-                <div class="scroll-y h-xl-185px" style="padding-right: 5px;">
+                <div class="scroll-y h-xl-175px" style="padding-right: 5px;">
                      
                 </div>
             </div>
