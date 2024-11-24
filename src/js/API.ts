@@ -117,12 +117,13 @@ export interface Assignment {
 }
 
 export interface Expense {
-    "Amount": number,
-    "Approvable": boolean,
-    "CostLineType": string,
-    "Date": string,
-    "DatePaid": string,
-    "Explanation": string,
+    Amount: number,
+    Approvable: boolean,
+    CostLineType: string,
+    Date: string,
+    DatePaid: string,
+    Explanation: string,
+    Manageable: boolean
     Id: number,
     Status: number
 }

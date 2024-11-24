@@ -17,7 +17,7 @@ export class DeclarationsWidget extends Widget {
         const data = await API.getExpenses();
 
         const acceptedRows = data.filter(row => row.Status === 30);
-        const proposedRows = data.filter(row => row.Status === 15);
+        const proposedRows = data.filter(row => row.Status === 15 && row.Manageable);
         const paidRows = data.filter(row => row.Status === 40);
 
         let acceptedAmount =
@@ -49,8 +49,8 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Voorgesteld</a>
-                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan voorgestelde declaraties.</span>
+                                <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Nog te accepteren</a>
+                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan nog goed te keuren declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-proposed">&euro; 0,00</span>
@@ -61,7 +61,7 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Goedgekeurd</a>
+                                <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Goedgekeurd</a>
                                 <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan goedgekeurde declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
@@ -73,7 +73,7 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">Betaald</a>
+                                <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Betaald</a>
                                 <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan uitbetaalde declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
