@@ -152,7 +152,7 @@ export class PastMatchWidget extends Widget {
         element.innerHTML = `
             <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                 <div class="me-5 w-75">
-                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">${assignment.HomeTeam} - ${assignment.AwayTeam}</a>
+                    <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">${assignment.Match}</a>
                     <span class="text-gray-700 fs-7 d-block text-start ps-0">${assignment.Division} | ${date}</span>
                 </div>
                 <div class="d-flex align-items-center">
