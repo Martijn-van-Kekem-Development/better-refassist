@@ -19,6 +19,9 @@ export class DeclarationsWidget extends Widget {
         const acceptedRows = data.filter(row => row.Status === 30);
         const proposedRows = data.filter(row => row.Status === 15 && row.Manageable);
         const paidRows = data.filter(row => row.Status === 40);
+        const maxDate = paidRows.reduce((a, b) => {
+            return new Date(a.DatePaid) > new Date(b.DatePaid) ? a : b;
+        }).DatePaid;
 
         let acceptedAmount =
             acceptedRows.reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
@@ -26,8 +29,9 @@ export class DeclarationsWidget extends Widget {
         let proposedAmount =
             proposedRows.reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
 
-        let paidAmount =
-            paidRows.reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
+        let paidAmount = paidRows
+                .filter(item => item.DatePaid === maxDate)
+                .reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
 
         document.getElementById(`betterra-widget-${this.getID()}-accepted`).innerHTML =
             `&euro; ${String(acceptedAmount).replace(".", ",")}`;
@@ -37,6 +41,10 @@ export class DeclarationsWidget extends Widget {
 
         document.getElementById(`betterra-widget-${this.getID()}-paid`).innerHTML =
             `&euro; ${String(paidAmount).replace(".", ",")}`;
+
+        const paymentDate = new Date(maxDate);
+        document.getElementById(`betterra-widget-${this.getID()}-date`).innerHTML =
+            `${paymentDate.getDate()}-${paymentDate.getMonth() + 1}-${paymentDate.getFullYear()}`;
     }
 
     protected getWidgetContentHTML(): string {
@@ -73,8 +81,8 @@ export class DeclarationsWidget extends Widget {
                     <div class="d-flex flex-stack">
                         <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
-                                <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Betaald</a>
-                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan uitbetaalde declaraties.</span>
+                                <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Laatste uitbetaling</a>
+                                <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag uitbetaald op <span id="betterra-widget-${this.getID()}-date"></span>.</span>
                             </div>
                             <div class="d-flex align-items-center">
                                 <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-paid">&euro; 0,00</span>
