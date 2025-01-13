@@ -16,27 +16,61 @@ export class PastMatchWidget extends Widget {
     protected assignments: Assignment[];
 
     /**
+     * The amount of loaded forms.
+     * @protected
+     */
+    protected formsToLoad: number = 5;
+
+    /**
+     * The last loaded form index.
+     * @protected
+     */
+    protected lastLoaded: number = 0;
+
+    /**
      * The forms per assignment.
      * @protected
      */
     protected forms: Map<string, Form[]>;
 
     /**
-     * When this widget is loaded.
+     * Load the items for the container.
      */
-    public async prepare() {
+    public async loadItems() {
         await this.getData();
 
         const assignmentContainer = this.rootElement.querySelector(".card-body .scroll-y");
-        for (let i = 0; i < Math.min(this.assignments.length, 5); i++) {
+        const firstAssignment = this.lastLoaded;
+        const lastAssignment = firstAssignment + this.formsToLoad;
+
+        // Remove existing load more element
+        const loadMoreEl = assignmentContainer.querySelector(".load-more-link");
+        if (loadMoreEl) loadMoreEl.remove();
+
+        for (let i = firstAssignment; i < Math.min(this.assignments.length, lastAssignment); i++) {
             const assignment = this.assignments[i];
 
             if (i > 0) assignmentContainer.append(this.getSeparatorElement());
             assignmentContainer.append(this.getMatchRowElement(assignment));
         }
 
+        // Add load more matches link
+        if (lastAssignment < this.assignments.length) {
+            assignmentContainer.append(this.getLoadMoreElement());
+        }
+
         // Insert detail view into body
         document.body.append(this.getDetailViewRootElement());
+        this.lastLoaded = lastAssignment;
+    }
+
+    /**
+     * When this widget is loaded.
+     */
+    public async prepare() {
+        this.assignments = (await API.getAssignments(true));
+        this.forms = new Map();
+        await this.loadItems();
     }
 
     /**
@@ -44,11 +78,11 @@ export class PastMatchWidget extends Widget {
      * @protected
      */
     protected async getData() {
-        this.assignments = (await API.getAssignments(true)).slice(0, 5);
-        this.forms = new Map();
-
         let promises = [];
-        for (let assignment of this.assignments) {
+        const firstAssignment = this.lastLoaded;
+        const lastAssignment = firstAssignment + this.formsToLoad;
+        const assignments = this.assignments.slice(firstAssignment, lastAssignment);
+        for (let assignment of assignments) {
             const matchID = String(assignment.MatchId);
 
             // No forms, so nothing to retrieve.
@@ -133,6 +167,22 @@ export class PastMatchWidget extends Widget {
         const data = JSON.parse(localStorage.getItem(this.LS_DATA_TAG) ?? "{}");
         data[matchID] = formCount;
         localStorage.setItem(this.LS_DATA_TAG, JSON.stringify(data));
+    }
+
+    /**
+     * Get the load more element
+     */
+    getLoadMoreElement(): HTMLElement {
+        const element = document.createElement("div");
+        element.classList.add("load-more-link");
+
+        const linkEl = document.createElement("a");
+        linkEl.setAttribute("href", "#");
+        linkEl.innerText = "Meer wedstrijden laden.";
+        linkEl.addEventListener("click", () => this.loadItems());
+        element.append(linkEl);
+
+        return element;
     }
 
     /**
