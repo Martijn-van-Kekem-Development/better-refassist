@@ -265,7 +265,9 @@ export class PastMatchWidget extends Widget {
             </div>
             <div class="modal-backdrop fade show" id="betterra-backdrop" style="display: none"></div>
         `;
-        element.querySelector(`button[data-bs-dismiss="modal"]`).addEventListener("click", () => this.closeDetailView());
+        element.querySelectorAll(`.btn[data-bs-dismiss="modal"]`)
+            .forEach(item =>
+                item.addEventListener("click", () => this.closeDetailView()));
         return element;
     }
 
