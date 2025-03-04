@@ -1,6 +1,6 @@
 {
   "name": "better-refassist",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Plugin that provides various improvements for the application RefAssist.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
