@@ -63,6 +63,26 @@ export class API {
     }
 
     /**
+     * Accept the expense with the given ID.
+     * @param id The expense to accept.
+     */
+    public static async acceptExpense(id: number): Promise<boolean> {
+        const data = await fetch(`https://home.refassist.com/ExpensesForOfficials/Approve?id=${id}`, {
+            "headers": {
+                "accept": "application/json, text/javascript, */*; q=0.01",
+                "cache-control": "no-cache",
+                "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+                "pragma": "no-cache",
+            },
+            "method": "POST",
+            "mode": "cors",
+            "credentials": "include"
+        });
+
+        return (await data.json()).succes;
+    }
+
+    /**
      * Get the available forms from the API.
      * @param matchID
      */
