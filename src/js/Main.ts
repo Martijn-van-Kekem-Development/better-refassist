@@ -1,5 +1,5 @@
-import {PastMatchWidget} from "./Widgets/PastMatchWidget.js";
 import {WidgetManager} from "./Widgets/WidgetManager.js";
+import {RefereeAppPage} from "./PageScripts/RefereeAppPage.js";
 
 export class Main {
     /**
@@ -10,21 +10,8 @@ export class Main {
         if (path === '/')
             WidgetManager.load().then();
         else if (path === '/refereeapp') {
-            this.saveSeasonData();
+            (new RefereeAppPage()).init();
         }
-    }
-
-    /**
-     * Save the data for the current season
-     * @protected
-     */
-    protected saveSeasonData() {
-        const officialID = document.getElementById("OfficialId") as HTMLInputElement;
-        const seasonID = document.getElementById("Season") as HTMLInputElement;
-        localStorage.setItem("season_data", JSON.stringify({
-            official: officialID.value,
-            season: seasonID.value
-        }));
     }
 }
 

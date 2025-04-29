@@ -9,6 +9,22 @@
       "32": "assets/umpire.png"
     }
   },
+  "declarative_net_request" : {
+    "rule_resources" : [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "inline-form-rule.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://home.refassist.com/*",
+    "https://refassist-production.s3.eu-central-1.amazonaws.com/3/filegenerations/*"
+  ],
   "icons": {
     "256": "assets/umpire.png"
   },
