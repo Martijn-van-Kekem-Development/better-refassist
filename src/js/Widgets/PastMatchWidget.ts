@@ -286,7 +286,8 @@ export class PastMatchWidget extends Widget {
             </div>
         `;
         element.querySelector("a").addEventListener("click", async () => {
-            window.location.href = await API.getFormURL(form.id);
+            const url = await API.getFormURL(form.id);
+            window.open(url, "_blank");
         });
 
         return element;
