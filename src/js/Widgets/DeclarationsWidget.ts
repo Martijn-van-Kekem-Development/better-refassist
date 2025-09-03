@@ -71,9 +71,6 @@ export class DeclarationsWidget extends Widget {
         const acceptedRows = this.data.filter(row => row.Status === 30);
         const proposedRows = this.data.filter(row => row.Status === 15 && row.Manageable);
         const paidRows = this.data.filter(row => row.Status === 40);
-        const maxDate = paidRows.reduce((a, b) => {
-            return new Date(a.DatePaid) > new Date(b.DatePaid) ? a : b;
-        }).DatePaid;
 
         let acceptedAmount =
             acceptedRows.reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
@@ -81,22 +78,34 @@ export class DeclarationsWidget extends Widget {
         let proposedAmount =
             proposedRows.reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
 
-        let paidAmount = paidRows
-                .filter(item => item.DatePaid === maxDate)
-                .reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
-
+        // Update labels
         document.getElementById(`betterra-widget-${this.getID()}-accepted`).innerHTML =
             `&euro; ${String(acceptedAmount).replace(".", ",")}`;
 
         document.getElementById(`betterra-widget-${this.getID()}-proposed`).innerHTML =
             `&euro; ${String(proposedAmount).replace(".", ",")}`;
 
-        document.getElementById(`betterra-widget-${this.getID()}-paid`).innerHTML =
-            `&euro; ${String(paidAmount).replace(".", ",")}`;
 
-        const paymentDate = new Date(maxDate);
-        document.getElementById(`betterra-widget-${this.getID()}-date`).innerHTML =
-            `${paymentDate.getDate()}-${paymentDate.getMonth() + 1}-${paymentDate.getFullYear()}`;
+        // If there are items that have been paid.
+        if (paidRows.length > 0) {
+            // Get most recent payment date
+            const maxDate = paidRows.reduce((a, b) => {
+                return new Date(a.DatePaid) > new Date(b.DatePaid) ? a : b;
+            }).DatePaid;
+
+            // Get the total amount that was paid on that date.
+            let paidAmount = paidRows
+                .filter(item => item.DatePaid === maxDate)
+                .reduce((sum, curr) => sum + curr.Amount, 0).toFixed(2);
+
+            // Update labels
+            const paymentDate = new Date(maxDate);
+            document.getElementById(`betterra-widget-${this.getID()}-paid`).innerHTML =
+                `&euro; ${String(paidAmount).replace(".", ",")}`;
+
+            document.getElementById(`betterra-widget-${this.getID()}-date`).innerHTML =
+                `${paymentDate.getDate()}-${paymentDate.getMonth() + 1}-${paymentDate.getFullYear()}`;
+        }
     }
 
     protected getWidgetContentHTML(): string {
