@@ -20,7 +20,7 @@
   },
   "license": "ISC",
   "devDependencies": {
-    "@types/chrome": "^0.0.270",
+    "@types/chrome": "^0.1.6",
     "concurrently": "^8.2.2",
     "sass": "^1.78.0",
     "typescript": "^5.5.4"
