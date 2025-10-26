@@ -68,7 +68,6 @@ export class PastMatchWidget extends Widget {
      * When this widget is loaded.
      */
     public async prepare() {
-        this.assignments = (await API.getAssignments(true));
         this.forms = new Map();
         await this.loadItems();
     }
@@ -79,17 +78,16 @@ export class PastMatchWidget extends Widget {
      */
     protected async getData() {
         let promises = [];
+
+        // Get assignments with filled forms
+        this.assignments = await API.getAssignments(true);
+        this.assignments = this.assignments.filter(item => item.HasFilledForms);
+
         const firstAssignment = this.lastLoaded;
         const lastAssignment = firstAssignment + this.formsToLoad;
         const assignments = this.assignments.slice(firstAssignment, lastAssignment);
         for (let assignment of assignments) {
             const matchID = String(assignment.MatchId);
-
-            // No forms, so nothing to retrieve.
-            if (!assignment.HasFilledForms) {
-                this.forms.set(matchID, []);
-                continue;
-            }
 
             const promise = API.getAvailableForms(matchID);
             promise.then(forms => {
