@@ -68,7 +68,6 @@ export class PastMatchWidget extends Widget {
      * When this widget is loaded.
      */
     public async prepare() {
-        this.assignments = (await API.getAssignments(true));
         this.forms = new Map();
         await this.loadItems();
     }
@@ -79,17 +78,16 @@ export class PastMatchWidget extends Widget {
      */
     protected async getData() {
         let promises = [];
+
+        // Get assignments with filled forms
+        this.assignments = await API.getAssignments(true);
+        this.assignments = this.assignments.filter(item => item.HasFilledForms);
+
         const firstAssignment = this.lastLoaded;
         const lastAssignment = firstAssignment + this.formsToLoad;
         const assignments = this.assignments.slice(firstAssignment, lastAssignment);
         for (let assignment of assignments) {
             const matchID = String(assignment.MatchId);
-
-            // No forms, so nothing to retrieve.
-            if (!assignment.HasFilledForms) {
-                this.forms.set(matchID, []);
-                continue;
-            }
 
             const promise = API.getAvailableForms(matchID);
             promise.then(forms => {
@@ -200,13 +198,13 @@ export class PastMatchWidget extends Widget {
         }
 
         element.innerHTML = `
-            <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
+            <div class="d-flex align-items-center flex-stack flex-row-fluid d-grid gap-2">
                 <div class="me-5 w-75">
                     <a href="#" class="text-gray-800 fw-bold text-hover-primary fs-6">${assignment.Match}</a>
                     <span class="text-gray-700 fs-7 d-block text-start ps-0">${assignment.Division} | ${date}</span>
                 </div>
                 <div class="d-flex align-items-center">
-                    <span class="text-gray-800 fw-bold fs-6 me-3">${formCount}</span>
+                    <span class="text-gray-800 no-wrap fw-bold fs-6 me-3">${formCount}</span>
                 </div>
             </div>
         `;
