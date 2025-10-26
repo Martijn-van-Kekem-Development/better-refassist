@@ -116,37 +116,37 @@ export class DeclarationsWidget extends Widget {
             <div class="card-body card-body-small h-xl-200px">
                 <div class="scroll-y h-xl-185px" style="padding-right: 5px;">
                     <div class="d-flex flex-stack">
-                        <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
+                        <div class="d-flex align-items-center flex-stack flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
                                 <a href="#" id="button_toAccept" class="text-gray-800 fw-bold text-hover-primary fs-6">Nog te accepteren</a>
                                 <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan nog goed te keuren declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-proposed">&euro; 0,00</span>
+                                <span class="text-gray-800 no-wrap fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-proposed">&euro; 0,00</span>
                             </div>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-3"></div>
                     <div class="d-flex flex-stack">
-                        <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
+                        <div class="d-flex align-items-center flex-stack flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
                                 <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Goedgekeurd</a>
                                 <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag aan goedgekeurde declaraties.</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-accepted">&euro; 0,00</span>
+                                <span class="text-gray-800 no-wrap fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-accepted">&euro; 0,00</span>
                             </div>
                         </div>
                     </div>
                     <div class="separator separator-dashed my-3"></div>
                     <div class="d-flex flex-stack">
-                        <div class="d-flex align-items-center flex-stack flex-wrap flex-row-fluid d-grid gap-2">
+                        <div class="d-flex align-items-center flex-stack flex-row-fluid d-grid gap-2">
                             <div class="me-5 w-75">
                                 <a href="/expensesforofficials" class="text-gray-800 fw-bold text-hover-primary fs-6">Laatste uitbetaling</a>
                                 <span class="text-gray-700 fs-7 d-block text-start ps-0">Het totaalbedrag uitbetaald op <span id="betterra-widget-${this.getID()}-date"></span>.</span>
                             </div>
                             <div class="d-flex align-items-center">
-                                <span class="text-gray-800 fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-paid">&euro; 0,00</span>
+                                <span class="text-gray-800 no-wrap fw-bold fs-6 me-3" id="betterra-widget-${this.getID()}-paid">&euro; 0,00</span>
                             </div>
                         </div>
                     </div>

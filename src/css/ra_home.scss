@@ -8,6 +8,11 @@
         margin-top: 0.5rem;
     }
 
+    .no-wrap {
+        white-space: nowrap;
+        overflow: hidden;
+    }
+
     .card-header .better-ra-icon {
         position: relative;
         width: 1.5rem;
