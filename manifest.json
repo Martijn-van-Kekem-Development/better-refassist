@@ -14,7 +14,7 @@
       {
         "id": "ruleset_1",
         "enabled": true,
-        "path": "inline-form-rule.json"
+        "path": "include/inline-form-rule.json"
       }
     ]
   },
